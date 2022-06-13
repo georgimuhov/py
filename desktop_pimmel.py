@@ -1,8 +1,73 @@
+'''
+"""
+ 6l4br10n @ qxz2uyl
+"""
 
-"""
- 6l4br10n
-"""
+from tkinter import *
+import tkinter as tk
 import ctypes
+from PIL import ImageGrab, ImageDraw, Image
+
+app = Tk()
+app.geometry("400x400")
+app.title("Desktop Pimmel Bot v0.1")
+app.eval('tk::PlaceWindow . center')
+
+
+def xy(event):
+    global x, y
+    x, y = event.x, event.y
+
+
+def draw(event):
+    global x, y
+    canvas.create_line((x, y, event.x, event.y), fill='red')
+    # canvas.create_text(100, 20, fill='red', font=("Arial", "30", "bold"),
+    #                   text="PIMMEL")
+    x, y = event.x, event.y
+#########################################
+width = 400
+height = 300
+center = height//2
+white = (255, 255, 255)
+green = (0,128,0)
+
+
+# Tkinter create a canvas to draw on
+canvas = Canvas(app, bg='black')
+canvas.pack(anchor='nw', fill='both', expand=1)
+canvas.bind("<Button-1>", xy)
+canvas.bind("<B1-Motion>", draw)
+canvas.pack()
+
+# PIL create an empty image and draw object to draw on
+# memory only, not visible
+image1 = Image.new("RGB", (width, height), white)
+draw = ImageDraw.Draw(image1)
+
+# do the Tkinter canvas drawings (visible)
+canvas.create_line([0, center, width, center], fill='green')
+
+# do the PIL image/draw (in memory) drawings
+draw.line([0, center, width, center], green)
+
+# PIL image can be saved as .png .jpg .gif or .bmp file (among others)
+def save_widget_as_image[]
+filename = "C:\my_drawing.jpg"
+image1.save(filename)
+
+# save as desktopWallpaper
+# ctypes.windll.user32.SystemParametersInfoW(20, 0, "absolute path", 0)
+
+schaltf1 = tk.Button(app, text="Aktion durchführen", command=save_widget_as_image)
+schaltf1.pack()
+
+app.mainloop()
+
+'''
+import ctypes
+import os
+import sys
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -55,9 +120,16 @@ d.text((400, 730), "                                                            
 d.text((400, 750), "                                                                                                    ", font=font, fill=(255, 255, 0))
 d.text((400, 820), "           PIMMEL                                        ", font=font_pimmel, fill=(255, 255, 0))
 
-img.save('C:\Daten\pil_text.png')
-
-ctypes.windll.user32.SystemParametersInfoW(20, 0, 'C:\Daten\pil_text.png', 0)
+try:
+    if os.path.isdir("C:\pimmel"):
+        ctypes.windll.user32.SystemParametersInfoW(20, 0, 'C:\pimmel\pimmel.jpg', 0)
+    else:
+        path = os.path.join("C:\pimmel")
+        os.mkdir(path)
+        img.save('C:\pimmel\pimmel.jpg')
+        ctypes.windll.user32.SystemParametersInfoW(20, 0, 'C:\pimmel\pimmel.jpg', 0)
+except Exception as e:
+    print(e)
 
 
 
